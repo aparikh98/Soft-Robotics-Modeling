@@ -68,11 +68,11 @@ class DataRecorder():
         filename = os.path.join(os.path.dirname(os.path.realpath('__file__')), 'data', self.run_name)
         df.to_csv(filename)
 
-    def record_data(self):
+    def record_data(self, val):
         """
         Script to command soft finger.  You can send commands to both fingers, but only the right is attached.
         """
-        self.cmd_pub.publish(SoftGripperCmd(150,150))
+        self.cmd_pub.publish(SoftGripperCmd(val,val))
         rospy.sleep(3)
         self.cmd_pub.publish(SoftGripperCmd(0,0))
         rospy.sleep(3)
@@ -86,6 +86,10 @@ class DataRecorder():
         self.flush()
 
 if __name__ == '__main__':
-    rospy.init_node('data_recorder')
-    dr = DataRecorder('tmp.csv')
-    dr.record_data()
+    for i in range(5):
+        for j in range(5):
+            rospy.init_node('data_recorder')
+            fname = "pwm" + str(i * 25 + 25) + "_" + str(j)+ ".csv"
+            print("Recording", fname)
+            dr = DataRecorder(fname)
+            dr.record_data(i * 25 + 50)

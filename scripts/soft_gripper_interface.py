@@ -191,6 +191,10 @@ class SoftGripperInterface():
         rate = rospy.Rate(100)
         while not rospy.is_shutdown():
             read_serial = self.ser.readline()
+            # print(read_serial)
+            # temp = read_serial.split(',')
+            # print(temp)
+            read_serial = read_serial.replace('\r\n', '')
             try:
                 if i % 20 == 0:
                     self.update_homography()
