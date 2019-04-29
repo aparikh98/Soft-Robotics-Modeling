@@ -75,7 +75,7 @@ class DataRecorder():
         Script to command soft finger.  You can send commands to both fingers, but only the right is attached.
         """
         self.cmd_pub.publish(SoftGripperCmd(val,val))
-        rospy.sleep(3)
+        rospy.sleep(10)
         self.cmd_pub.publish(SoftGripperCmd(0,0))
         rospy.sleep(3)
         self.shutdown()
@@ -88,18 +88,18 @@ class DataRecorder():
         self.flush()
 
 if __name__ == '__main__':
+    for i in range(10):
+        val = i * 10 + 75
+        rospy.init_node('data_recorder')
+        fname = "part1_pwm" + str(val) + ".csv"
+        print("Recording", fname)
+        dr = DataRecorder(fname)
+        dr.record_data(val)
     for i in range(5):
         for j in range(5):
             val = i * 25 + 75
             rospy.init_node('data_recorder')
-            fname = "part1_pwm" + str(val) + "_" +str(j) + ".csv"
+            fname = "part2_pwm" + str(val) + "_" +str(j) + ".csv"
             print("Recording", fname)
             dr = DataRecorder(fname)
             dr.record_data(val)
-    for i in range(10):
-        val = i * 10 + 75
-        rospy.init_node('data_recorder')
-        fname = "part2_pwm" + str(val) + ".csv"
-        print("Recording", fname)
-        dr = DataRecorder(fname)
-        dr.record_data(val)
