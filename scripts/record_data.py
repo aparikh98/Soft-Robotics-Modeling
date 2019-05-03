@@ -41,7 +41,6 @@ class DataRecorder():
         """
         if self.start_time is None:
             self.start_time = msg.time
-        angle = np.arctan((msg.base_pos.y - msg.tip_pos.y)/ (msg.base_pos.x - msg.tip_pos.x))
         scaled_voltage = msg.left_flex * 5.0 / 1024.0
         self.states.append([
             msg.time - self.start_time, 
@@ -49,7 +48,7 @@ class DataRecorder():
             msg.left_pressure, msg.right_pressure, 
             msg.left_flex, msg.right_flex, 
             msg.base_pos.x, msg.base_pos.y, 
-            msg.tip_pos.x, msg.tip_pos.y, angle, scaled_voltage,
+            msg.tip_pos.x, msg.tip_pos.y, scaled_voltage,
         ])
 
     def flush(self):
@@ -64,7 +63,7 @@ class DataRecorder():
                 'left_pressure', 'right_pressure', 
                 'left_flex', 'right_flex', 
                 'base_pos_x', 'base_pos_y', 
-                'tip_pos_x', 'tip_pos_y', 'bend_angle', 'scaled_voltage',
+                'tip_pos_x', 'tip_pos_y', 'scaled_voltage',
             ]
         )
         filename = os.path.join(os.path.dirname(os.path.realpath('__file__')), 'data', self.run_name)
@@ -97,7 +96,7 @@ if __name__ == '__main__':
         dr.record_data(val)
     for i in range(5):
         for j in range(5):
-            val = i * 25 + 75
+            val = i * 10 + 100
             rospy.init_node('data_recorder')
             fname = "part2_pwm" + str(val) + "_" +str(j) + ".csv"
             print("Recording", fname)
