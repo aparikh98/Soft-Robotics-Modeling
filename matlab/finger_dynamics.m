@@ -8,7 +8,7 @@ clc
 syms q dq ddq real
 
 % Parameters
-m = 0.05; % This is made up for now
+m = 0.035; % This is made up for now
 g = [9.81; 0; 0]; % The x axis points down
 L = 0.084; % 8.4 cm
 
@@ -39,7 +39,7 @@ dp_end = simplify(jacobian(p_end, q)*dq);
 
 % Energy
 KE = 0.5*m*(dp_com'*dp_com);
-PE = m*g'*p_com;
+PE = m*g'*(p_com - [L; 0; 0]);
 
 %% Dynamics
 

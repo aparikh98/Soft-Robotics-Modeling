@@ -9,7 +9,7 @@ addpath( genpath( [cur, '/gen/' ] ));
 
 %% Load CSV run import data, Generate q(t)
 
-data = part2beta;
+data = part2alpha;
 Q = data.bend_angle;
 % This section is done in python in: readcsv.ipynb. We vary parameters
 % within the notebook to 
@@ -62,7 +62,7 @@ beta = results(2)
 delta_vals = 0.1:0.1:2;
 gamma_vals = 0.1:0.1:2;
 len = size(delta_vals);
-len = len(2);
+len = len(1);
 values = [];
 for index = 1:len
     for index2 = 1:len
